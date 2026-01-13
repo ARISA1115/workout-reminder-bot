@@ -1,0 +1,30 @@
+# 環境変数ファイル（機密情報を含む）
+.env
+.env.local
+.env.*.local
+
+# ログファイル
+*.log
+cron.log
+
+# OS固有のファイル
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# エディタ固有のファイル
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.*.sw?
+
+# 一時ファイル
+*.tmp
+*.temp
+.cache/

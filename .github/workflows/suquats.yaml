@@ -1,0 +1,29 @@
+name: Squat Challenge
+
+on:
+  schedule:
+    # JST 平日 09:00,12:00,15:00,18:00  → UTC 平日 00:00,03:00,06:00,09:00
+    - cron: "0 0,3,6,9 * * 1-5"
+    # JST 平日 09:45,12:45,15:45 → UTC 平日 00:45,03:45,06:45
+    - cron: "45 0,3,6 * * 1-5"
+    # JST 平日 10:30,13:30,16:30 → UTC 平日 01:30,04:30,07:30
+    - cron: "30 1,4,7 * * 1-5"
+    # JST 平日 11:15,14:15,17:15 → UTC 平日 02:15,05:15,08:15
+    - cron: "15 2,5,8 * * 1-5"
+
+  workflow_dispatch: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          payload='{"text":"🔥 Squat Challenge\n\n10 reps"}'
+          curl -sS -X POST \
+            -H 'Content-type: application/json' \
+            --data "${payload}" \
+            "${SLACK_WEBHOOK_URL}" >/dev/null
