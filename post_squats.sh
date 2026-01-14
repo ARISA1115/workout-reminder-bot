@@ -14,7 +14,31 @@ fi
 
 : "${SLACK_WEBHOOK_URL:?SLACK_WEBHOOK_URL is not set}"
 
-payload='{"text":"🔥 Squat Challenge\n\n10 reps"}'
+TIMESTAMP=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
+payload=$(cat <<EOF
+{
+  "text": "🔥 Squat Challenge",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "🔥 *Squat Challenge*\n\n10 reps"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "⏰ ${TIMESTAMP}"
+        }
+      ]
+    }
+  ]
+}
+EOF
+)
 
 curl -sS -X POST \
   -H 'Content-type: application/json' \
