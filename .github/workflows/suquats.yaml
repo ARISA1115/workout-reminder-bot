@@ -17,13 +17,20 @@ jobs:
   post:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
       - name: Post to Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           set -euo pipefail
+          if [ -z "${SLACK_WEBHOOK_URL}" ]; then
+            echo "Error: SLACK_WEBHOOK_URL is not set"
+            exit 1
+          fi
           payload='{"text":"🔥 Squat Challenge\n\n10 reps"}'
           curl -sS -X POST \
             -H 'Content-type: application/json' \
             --data "${payload}" \
-            "${SLACK_WEBHOOK_URL}" >/dev/null
+            "${SLACK_WEBHOOK_URL}"
