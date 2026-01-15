@@ -15,6 +15,13 @@ fi
 : "${SLACK_WEBHOOK_URL:?SLACK_WEBHOOK_URL is not set}"
 
 TIMESTAMP=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
+# 10%の確率で30回、それ以外は10回
+RANDOM_NUM=$((RANDOM % 100))
+if [ $RANDOM_NUM -lt 10 ]; then
+  CHALLENGE_TEXT="🔥 *Squat & Lunges Challenge*\n\nスクワット: 30回\nランジ: 30回"
+else
+  CHALLENGE_TEXT="🔥 *Squat & Lunges Challenge*\n\nスクワット: 10回\nランジ: 10回"
+fi
 payload=$(cat <<EOF
 {
   "text": "🔥 Squat & Lunges Challenge",
@@ -23,7 +30,7 @@ payload=$(cat <<EOF
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "🔥 *Squat & Lunges Challenge*\n\nスクワット: 10回\nランジ: 10回"
+        "text": "${CHALLENGE_TEXT}"
       }
     },
     {

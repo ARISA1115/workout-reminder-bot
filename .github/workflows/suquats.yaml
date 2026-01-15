@@ -23,7 +23,14 @@ jobs:
             exit 1
           fi
           TIMESTAMP=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
-          payload="{\"text\":\"🔥 Squat & Lunges Challenge\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"🔥 *Squat & Lunges Challenge*\\n\\nスクワット: 10回\\nランジ: 10回\"}},{\"type\":\"context\",\"elements\":[{\"type\":\"mrkdwn\",\"text\":\"⏰ ${TIMESTAMP}\"}]}]}"
+          # 10%の確率で30回、それ以外は10回
+          RANDOM_NUM=$((RANDOM % 100))
+          if [ $RANDOM_NUM -lt 10 ]; then
+            CHALLENGE_TEXT="🔥 *Squat & Lunges Challenge*\\n\\nスクワット: 30回\\nランジ: 30回"
+          else
+            CHALLENGE_TEXT="🔥 *Squat & Lunges Challenge*\\n\\nスクワット: 10回\\nランジ: 10回"
+          fi
+          payload="{\"text\":\"🔥 Squat & Lunges Challenge\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"${CHALLENGE_TEXT}\"}},{\"type\":\"context\",\"elements\":[{\"type\":\"mrkdwn\",\"text\":\"⏰ ${TIMESTAMP}\"}]}]}"
           curl -sS -X POST \
             -H 'Content-type: application/json' \
             --data "${payload}" \
