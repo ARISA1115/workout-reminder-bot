@@ -17,13 +17,13 @@ fi
 TIMESTAMP=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
 payload=$(cat <<EOF
 {
-  "text": "🔥 Squat Challenge",
+  "text": "🔥 Squat & Lunges Challenge",
   "blocks": [
     {
       "type": "section",
       "text": {
         "type": "mrkdwn",
-        "text": "🔥 *Squat Challenge*\n\n10 reps"
+        "text": "🔥 *Squat & Lunges Challenge*\n\nスクワット: 10回\nランジ: 10回"
       }
     },
     {
